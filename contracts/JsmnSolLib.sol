@@ -19,7 +19,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.1;
 
 library JsmnSolLib {
 
@@ -112,7 +112,7 @@ library JsmnSolLib {
     function parsePrimitive(Parser memory parser, Token[] memory tokens, bytes memory s) internal pure returns (uint) {
         bool found = false;
         uint start = parser.pos;
-        byte c;
+        bytes1 c;
         bool success;
         Token memory token;
         for (; parser.pos < s.length; parser.pos++) {
@@ -207,7 +207,7 @@ library JsmnSolLib {
                 if (i==0) {
                     token = tokens[i];
                     if (token.startSet && !token.endSet) {
-                        parser.toksuper = uint128(i);
+                        parser.toksuper = int128(uint128(i));
                     }
                 }
                 continue;
@@ -314,7 +314,7 @@ library JsmnSolLib {
                     else _b--;
                 }
                 mint *= 10;
-                mint += uint8(bresult[i]) - 48;
+                mint += int256(uint256(uint8(bresult[i]) - 48));
             } else if (uint8(bresult[i]) == 46) decimals = true;
         }
         if (_b > 0) mint *= int(10**_b);
